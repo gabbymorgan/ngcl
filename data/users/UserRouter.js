@@ -6,7 +6,8 @@ const router = express.Router();
 
 router
   .get("/", (req, res) => {
-    User.find()
+    User
+      .find().select("-password -_id")
       .then(users => {
         res.status(200).json(users);
       })

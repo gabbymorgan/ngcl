@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema({
     index: true,
     lowercase: true
   },
-  permissions: [String],
+  isAdmin: Boolean,
   password: {
     type: String,
     required: true

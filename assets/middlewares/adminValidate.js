@@ -7,7 +7,7 @@ const adminValidate = function(req, res, next) {
       return User
         .findOne({ username: username })
         .then(user => {
-            if (user.username == "wrpelton") {
+            if (user.isAdmin == true) {
                 req.user = user;
                 next();
             }
