@@ -13,6 +13,10 @@ const PostSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
   date: {
     type: Date,
     default: Date.now()

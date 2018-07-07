@@ -10,6 +10,7 @@ const dotenv = require("dotenv");
 
 const userRouter = require("./data/users/UserRouter");
 const postRouter = require("./data/posts/PostRouter");
+const categoryRouter = require("./data/categories/CategoryRouter");
 dotenv.config();
 const secret = process.env.SECRET;
 
@@ -36,5 +37,6 @@ server.use(
 );
 server.use("/users", userRouter);
 server.use("/posts", postRouter);
+server.use("/categories", categoryRouter);
 
 module.exports = server;
