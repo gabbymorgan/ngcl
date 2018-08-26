@@ -1,27 +1,30 @@
+const express = require("express");
+const path = require("path");
 const mongoose = require("mongoose");
-const server = require("./server");
+const server = require("./server/server");
 const mongo = process.env.mongo;
 
 const port = process.env.PORT || 5000;
 
-const db = {
-  dev: "mongodb://127.0.0.1:27017/nerdgasm",
-  //TODO: change production DB to nerdgasm
-  prod: `mongodb+srv://lambda-notes:${mongo}@cluster0-h73bz.mongodb.net/test`
-};
+// serve from build directory for front-end
+server.use(express.static(path.join(__dirname, 'client/build')));
+server
+  .get('*', (req, res) => {
+    res.sendFile(path.join(`${__dirname}/client/build/index.html`));
+  });
 
-let useDb;
+let dbUrl;
 if (process.env.NODE_ENV === "production") {
-  useDb = db.prod;
+  dbUrl = `mongodb+srv://lambda-notes:${mongo}@cluster0-h73bz.mongodb.net/test`;
 } else {
-  useDb = db.dev;
+  dbUrl = "mongodb://127.0.0.1:27017/nerdgasm";
 }
 
 mongoose.connect(
-  useDb,
+  dbUrl,
   {},
   err => {
-    if (err) return console.log(err);
+    if (err) return console.log(dbUrl, err);
     console.log("DB Connection Achieved");
   }
 );
